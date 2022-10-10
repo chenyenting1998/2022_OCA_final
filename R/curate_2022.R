@@ -55,9 +55,11 @@ tj <-
   read_xlsx("xlsx/2022/Sorting_湯淨_20221003.xlsx", sheet = 3) %>% 
   mutate(Cruise = if_else(Cruise == "2021.小琉球",
                           "2021.Liuqiu",
-                          Cruise)) 
+                          Cruise)) %>% 
+  mutate(Station = if_else(Station == "龜山島",
+                           "龜山島(II)",
+                           Station))
 # check_taxa(tj)
-
 tj[tj$Taxon == "Nemetina", "Taxon"] <- "Nemertea"
 tj[tj$Taxon == "Acarina", "Taxon"] <- "Acari"
 tj[tj$Taxon == "Leptocardii", "Taxon"] <- "Cephalochordata"
