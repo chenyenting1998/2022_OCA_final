@@ -1,7 +1,13 @@
+# library
 library(dplyr)
 library(writexl)
 library(readxl)
-library(GRSPRSThesisData)
+
+# source
+source("source/check_taxa.R")
+source("source/rename_taxon.R")
+
+# f <- function(data) data[data$Taxon %in% c("Gastrapoda", "Oligochaetea"),]
 
 # read and curate new files ----
 
@@ -17,11 +23,13 @@ tcc2 <-
   mutate(Cruise = if_else(Cruise == "2021.小琉球",
                           "2021.Liuqiu",
                           Cruise)) 
-
+# Check and rename taxon
+# check_taxa(tcc1)
+# check_taxa(tcc2)
+tcc1 <- rename_taxon(tcc1, "Gastrapoda", "Gastropoda")
+tcc1 <- rename_taxon(tcc1, "Sipucula", "Sipuncula")
 tcc2[tcc2$Taxon == "Malacostraca",]$Note <- "Paguroidea"
 tcc2[tcc2$Taxon == "Malacostraca",]$Taxon <- "Decapoda"
-
-# Malacostraca at 萬里桐
 
 ## Chen, Yen-Ting----
 cyt1 <- 
@@ -34,11 +42,13 @@ cyt2 <-
   mutate(L = 0.1 * L,
          W = 0.1 * W)
 
+# check_taxa(cyt1)
+# check_taxa(cyt2)
+
 ## Chen, Hsin----
 ch1 <- 
   read_xlsx("xlsx/2022/2021.East___Liuqiu_macro_size_Hsin.xlsx")
-unique(tj$Taxon)
-# ch2 <- 
+# check_taxa(ch1)
 
 ## Tang, Jing----
 tj <- 
@@ -46,7 +56,7 @@ tj <-
   mutate(Cruise = if_else(Cruise == "2021.小琉球",
                           "2021.Liuqiu",
                           Cruise)) 
-
+# check_taxa(tj)
 
 tj[tj$Taxon == "Nemetina", "Taxon"] <- "Nemertea"
 tj[tj$Taxon == "Acarina", "Taxon"] <- "Acari"
