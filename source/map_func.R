@@ -12,23 +12,23 @@ plot_map <- function(data){
 }
 
 add_tw_st <- function(data, loc){
-  geom_point(data = data[data$Location %in% loc,],
-             aes(x = Lon, y = Lat, color = Location),
+  geom_point(data = data[data$Location_zh %in% loc,],
+             aes(x = Lon, y = Lat, color = Location_zh),
              size = 2, 
              shape = 21, 
              stroke = 1.5)
 }
 
 add_st <- function(data, loc){
-  geom_point(data = data[data$Location %in% loc,],
+  geom_point(data = data[data$Location_zh %in% loc,],
              aes(x = Lon, y = Lat, color = Progress, fill = Progress),
              alpha = 0.5,
              shape = 21,
              size = 1.5)
 }
 add_st_lab <- function(data, loc, s = 1){
-  ggrepel::geom_label_repel(data = data[data$Location %in% loc,],
-                            aes(x = Lon, y = Lat, label = Station_zh, color = Progress),
+  ggrepel::geom_label_repel(data = data[data$Location_zh %in% loc,],
+                            aes(x = Lon, y = Lat, label = Station, color = Progress),
                             family = msjh,
                             size = 3,
                             label.padding = 0.15,
