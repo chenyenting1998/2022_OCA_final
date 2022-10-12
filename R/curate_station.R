@@ -57,11 +57,18 @@ st <-
   mutate(Station = Station_zh)
 
 # add progress
-mea_2021 <- read_xlsx("data/2021_OCA_macrofauna_measurement.xlsx")
-mea_2022 <- read_xlsx("data/2022_OCA_macrofauna_measurement.xlsx")
+mid2021 <- c("花嶼", "貓嶼", "澎澎灘", "西吉嶼", "東吉嶼", "小門嶼", "鯨魚洞", "北鐵砧", "青灣內灣", "姑婆嶼")
+fin2021 <- c("頭巾嶼", "懷恩堂", "七美", "四角嶼", "東嶼坪","彭佳嶼","目斗嶼", "西嶼坪", "桶盤嶼", "雞籠嶼", "鼻頭","82.5","觀新", "蝙蝠洞", "龍洞", "小香蘭", "基隆嶼","協和","深澳", "大潭", "卯澳", "外木山", "和平島","花瓶嶼","虎井嶼", "桂安漁港, 馬崗", "潮境", "南鐵砧")
+mid2022 <- c("烏石鼻", "磯崎", "新社", "石雨傘", "基翬", "加母子", "美人洞", "大福", "厚石", "杉福", "烏鬼洞", "中澳沙灘", "桂安漁港", "馬崗","青灣")
 
-st$Progress <- "已採樣"
-st$Progress[st$Station %in% unique(mea_2021$Station)] <- "2021"
-st$Progress[st$Station %in% unique(mea_2022$Station)] <- "2022"
+size <- read_xlsx("data/2022_OCA_final_macrofauna_size.xlsx")
+
+fin2022 <- unique(size$Station)[!unique(size$Station) %in% c(mid2021, fin2021, mid2022)]
+
+st$Progress <- "已採樣，未納入分析"
+st$Progress[st$Station %in% mid2021] <- "2021期中"
+st$Progress[st$Station %in% fin2021] <- "2021期末"
+st$Progress[st$Station %in% mid2022] <- "2022期中"
+st$Progress[st$Station %in% fin2022] <- "2022期末"
 
 write_xlsx(st, path = "data/station.xlsx")

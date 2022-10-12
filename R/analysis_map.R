@@ -8,7 +8,11 @@ library(ncdf4)
 # load files
 st <- read_xlsx("data/station.xlsx")
 load("data/loc_and_prog_color_code.RData")
-prog_color <- c("已採樣"="green", "2021" = "blue", "2022" = "red")
+prog_color <- c("已採樣，未納入分析"="green", 
+                "2021期中" = "red",
+                "2021期末" = "blue",
+                "2022期中" = "purple",
+                "2022期末" = "orange")
 
 # read source
 source("source/map_func.R")
@@ -60,12 +64,57 @@ t_map <- map %>% filter(Lon > min(t_c$Lon) & Lon < max(t_c$Lon) & Lat > min(t_c$
 k_map <- map %>% filter(Lon > min(k_c$Lon) & Lon < max(k_c$Lon) & Lat > min(k_c$Lat) & Lat < max(k_c$Lat))
 
 # plot progress
-e <- plot_map(e_map) + add_st(st, loc = "東台灣") + add_st_lab(st, loc = "東台灣", s = 3) + scale_color_manual(values = prog_color)
-n <- plot_map(n_map) + add_st(st, loc = "北台灣") + add_st_lab(st, loc = "北台灣", s = 100) + ht + scale_color_manual(values = prog_color)
-l <- plot_map(l_map) + add_st(st, loc = "小琉球") + add_st_lab(st, loc = "小琉球") + ht + scale_color_manual(values = prog_color)
-p <- plot_map(p_map) + add_st(st, loc = "澎湖") + add_st_lab(st, loc = "澎湖", s = 6) + ht + scale_color_manual(values = prog_color)
-t <- plot_map(t_map) + add_st(st, loc = "桃園") + add_st_lab(st, loc = "桃園") + ht + scale_color_manual(values = prog_color)
-k <- plot_map(k_map) + add_st(st, loc = "墾丁") + add_st_lab(st, loc = "墾丁") + ht + scale_color_manual(values = prog_color)
+
+theme(legend.text = element_text(family = msjh))
+  
+e <- 
+  plot_map(e_map) + add_st(st, loc = "東台灣") + 
+  add_st_lab(st, loc = "東台灣", s = 3) +
+  scale_color_manual(values = prog_color) +
+  scale_fill_manual(values = prog_color) +
+  theme(legend.text = element_text(family = msjh),
+        legend.title = element_text(family = msjh)) +
+  guides(color = guide_legend(title = "分析進度",
+                              override.aes = list(size = 8)),
+         fill = "none")+
+  theme(legend.position = c(0.7,0.20))
+  
+
+n <- plot_map(n_map) + 
+  add_st(st, loc = "北台灣") + 
+  add_st_lab(st, loc = "北台灣", s = 100) + 
+  ht +
+  scale_color_manual(values = prog_color) +
+  scale_fill_manual(values = prog_color) +
+  ht
+
+l <- plot_map(l_map) + 
+  add_st(st, loc = "小琉球") + 
+  add_st_lab(st, loc = "小琉球") + 
+  scale_color_manual(values = prog_color) +
+  scale_fill_manual(values = prog_color) +
+  ht
+
+p <- plot_map(p_map) + 
+  add_st(st, loc = "澎湖") + 
+  add_st_lab(st, loc = "澎湖", s = 6) + 
+  scale_color_manual(values = prog_color) +
+  scale_fill_manual(values = prog_color) +
+  ht
+
+t <- plot_map(t_map) + 
+  add_st(st, loc = "桃園") + 
+  add_st_lab(st, loc = "桃園") + 
+  scale_color_manual(values = prog_color) +
+  scale_fill_manual(values = prog_color) +
+  ht
+
+k <- plot_map(k_map) + 
+  add_st(st, loc = "墾丁") + 
+  add_st_lab(st, loc = "墾丁") + 
+  scale_color_manual(values = prog_color) +
+  scale_fill_manual(values = prog_color) +
+  ht
 
 plot_save(p + n + plot_annotation(tag_levels = "a",
                                   tag_prefix = "(",
