@@ -109,7 +109,17 @@ bio_comp_ggplot <-
         strip.text = element_text(family = msjh))
 
 plot_save(bio_comp_ggplot, "composition_biomass_g")
-
+plot_save(bio_comp_ggplot + 
+            xlab("站點") +
+            theme(legend.position = "top",
+                  strip.text.x = element_text(size = 14),
+                  legend.text = element_text(size = 12),
+                  strip.background.y = element_rect(size = 5),
+                  axis.title.x = element_text(size = 14,family = msjh)), 
+          "composition_biomass_g_ppt", 
+          scale = 1.2,
+          h = 5,
+          w = 10)
 
 bio_comp_percent_ggplot <- 
   comp[comp$Variable == "Biomass",] %>% 
@@ -131,6 +141,17 @@ bio_comp_percent_ggplot <-
         strip.text = element_text(family = msjh))
 
 plot_save(bio_comp_percent_ggplot, "composition_biomass_percent")
+plot_save(bio_comp_percent_ggplot + 
+            xlab("站點") +
+            theme(legend.position = "top",
+                  strip.text.x = element_text(size = 14),
+                  legend.text = element_text(size = 12),
+                  strip.background.y = element_rect(size = 5),
+                  axis.title.x = element_text(size = 14,family = msjh)), 
+          "composition_biomass_percent_ppt", 
+          scale = 1.2,
+          h = 5,
+          w = 10)
 
 # Phylum rank ----
 phylum_rank <- 

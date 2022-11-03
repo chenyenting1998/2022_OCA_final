@@ -6,7 +6,7 @@ library(patchwork)
 library(ncdf4)
 
 # load files
-st <- read_xlsx("data/station.xlsx")
+st <- read_xlsx("data/2022_OCA_final_station.xlsx")
 load("data/loc_and_prog_color_code.RData")
 prog_color <- c("已採樣，未納入分析"="green", 
                 "2021期中" = "red",

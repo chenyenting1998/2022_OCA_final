@@ -103,6 +103,7 @@ bio_rda_ggplot <-
   geom_text_repel(aes(family = msjh,
                       label = Station), 
                   seed = 1, size = 2.5, force = 20, max.overlaps = 50)+
+                  # seed = 1, size = 4, force = 20, max.overlaps = 50)+
   guides(color = guide_legend(title = "Location"))+
   xlab(paste0("PC1 (", bio_rda_pr[1], "% explained)"))+
   ylab(paste0("PC2 (", bio_rda_pr[2], "% explained"))+

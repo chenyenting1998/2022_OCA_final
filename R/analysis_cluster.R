@@ -139,6 +139,8 @@ bio_dendro_ggplot <-
   geom_text(data = all_bio_lab, 
             aes(x = x, y = y + 0.12, label = Station),
             size = 3,
+            # aes(x = x, y = y + 0.08, label = Station),
+            # size = 2.5,
             hjust = 0.01,
             family = msjh,
             nudge_y = 0.15,
@@ -156,6 +158,18 @@ bio_dendro_ggplot <-
         panel.background = element_blank(),
         panel.border = element_blank(), # remove border
         axis.line.x.bottom = element_line(colour = "black")) # add back y border
+
+plot_save(bio_dendro_ggplot + 
+            xlab("站點") +
+            theme(legend.position = "none",
+                  strip.text.x = element_text(size = 14),
+                  legend.text = element_text(size = 12, family = msjh),
+                  # strip.background.y = element_rect(size = 5),
+                  axis.title.x = element_text(size = 14,family = msjh)), 
+          "bio_dendro_ppt", 
+          scale = 1.2,
+          h = 7,
+          w = 3.5)
 
 cluster_plot <- 
   den_dendro_ggplot + theme(legend.position = "none")+ 
