@@ -3,11 +3,13 @@ library(writexl)
 library(readxl)
 library(GRSPRSThesisData)
 
+# read data
 mea <- 
   rbind(read_xlsx("data/2021_OCA_macrofauna_measurement.xlsx"),
         read_xlsx("data/2022_OCA_macrofauna_measurement.xlsx")) %>% 
   select(-Habitat, -Deployment, -Family, -Genus, -a, -b, -C)
 
+# checking typo
 mea[mea$Taxon  %in% c("Gastrapoda", "Oligochaetea"),]
 
 # remove year
@@ -16,10 +18,10 @@ mea$Cruise <- gsub(".*\\.", "", mea$Cruise)
 # add kenting
 mea$Cruise[mea$Cruise == "South"] <- "Kenting"
 
-# cruise to location
+# change column name "cruise" to "Location"
 mea <- rename(mea, "Location" = "Cruise")
 
-# attach loc_zh
+# attach the chinese location name
 loc <-
   c("North" = "北台灣",
     "East" = "東台灣",
@@ -30,13 +32,15 @@ loc <-
 mea$Location_zh <- loc[match(mea$Location, names(loc))]
 mea <- relocate(mea, Location_zh, .after = "Location")
 
+# check typo again
 taxlist <- mea["Taxon"] %>% distinct
 
-
+# get biovolume method
 oca_2022_biovolume <- 
   read_xlsx("xlsx/biovolume_add_on.xlsx") %>% 
   full_join(biovolume_method)
 
+# calculating biovolume and wet mass (using self-defined functions)
 grouping_variables <- colnames(mea)[1:5]
   
 size <- 
